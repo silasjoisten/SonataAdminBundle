@@ -1549,7 +1549,7 @@ html.sidebar-collapsed .admin-main {
 .admin-filter-chip-type select,
 .admin-filter-chip-type .admin-form-select,
 .admin-filter-chip-type .form-control {
-    @apply bg-transparent h-full text-xs min-w-[70px] w-auto pr-8 pl-3;
+    @apply bg-transparent h-full text-xs min-w-[140px] w-auto pr-8 pl-3;
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;

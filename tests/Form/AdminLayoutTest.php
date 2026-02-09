@@ -110,7 +110,7 @@ final class AdminLayoutTest extends AbstractLayoutTestCase
         $expression = <<<'EOD'
             /div
                 [@id="name_help"]
-                [@class="help-block sonata-ba-field-help help-text"]
+                [@class="help-block sensiolabs-ba-field-help help-text"]
                 [.="[trans]Help text test![/trans]"]
             EOD;
 
@@ -131,7 +131,7 @@ final class AdminLayoutTest extends AbstractLayoutTestCase
         $expression = <<<'EOD'
             /div
                 [@id="name_help"]
-                [@class="help-block sonata-ba-field-help help-text"]
+                [@class="help-block sensiolabs-ba-field-help help-text"]
                 [.="[trans domain=sonata_translation_domain]Help text test![/trans]"]
             EOD;
 
@@ -145,7 +145,7 @@ final class AdminLayoutTest extends AbstractLayoutTestCase
         $html = $this->renderRow($view);
 
         static::assertStringContainsString(
-            '<div id="sonata-ba-field-container-name" class="form-group">',
+            '<div id="sensiolabs-ba-field-container-name" class="form-group">',
             $html
         );
     }
@@ -160,7 +160,7 @@ final class AdminLayoutTest extends AbstractLayoutTestCase
         $html = $this->renderRow($view);
 
         static::assertStringContainsString(
-            '<div id="sonata-ba-field-container-name" class="form-group has-error">',
+            '<div id="sensiolabs-ba-field-container-name" class="form-group has-error">',
             $html
         );
     }
@@ -213,7 +213,7 @@ final class AdminLayoutTest extends AbstractLayoutTestCase
         $html = $this->renderRow($view);
 
         static::assertStringContainsString(
-            '<div class="foo form-group" data-value="bar" id="sonata-ba-field-container-name">',
+            '<div class="foo form-group" data-value="bar" id="sensiolabs-ba-field-container-name">',
             $html
         );
     }

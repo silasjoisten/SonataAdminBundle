@@ -67,13 +67,13 @@ final class ResizeFormListener implements EventSubscriberInterface
         }
 
         // Then add all rows again in the correct order
+        /** @var int|string $name */
         foreach ($data as $name => $value) {
+            $name = (string) $name;
             $options = array_merge($this->typeOptions, [
                 'property_path' => '['.$name.']',
                 'data' => $value,
             ]);
-
-            $name = \is_int($name) ? (string) $name : $name;
 
             $form->add($name, $this->type, $options);
         }
@@ -108,26 +108,27 @@ final class ResizeFormListener implements EventSubscriberInterface
         }
 
         // Add all additional rows
+        /** @var int|string $name */
         foreach ($data as $name => $value) {
+            $name = (string) $name;
+
             // remove selected elements before adding them again
-            if (isset($value['_delete'])) {
+            if (\is_array($value) && isset($value['_delete'])) {
                 unset($data[$name]);
 
                 continue;
             }
 
-            if (!$form->has((string) $name)) {
+            if (!$form->has($name)) {
                 $buildOptions = [
                     'property_path' => '['.$name.']',
                 ];
 
                 if (null !== $this->preSubmitDataCallback) {
-                    $buildOptions['data'] = \call_user_func($this->preSubmitDataCallback, $value);
+                    $buildOptions['data'] = ($this->preSubmitDataCallback)($value);
                 }
 
                 $options = array_merge($this->typeOptions, $buildOptions);
-
-                $name = \is_int($name) ? (string) $name : $name;
 
                 $form->add($name, $this->type, $options);
             }
@@ -159,8 +160,10 @@ final class ResizeFormListener implements EventSubscriberInterface
             throw new UnexpectedTypeException($data, 'array or \Traversable&\ArrayAccess');
         }
 
+        /** @var int|string $name */
         foreach ($data as $name => $child) {
-            if (!$form->has((string) $name)) {
+            $name = (string) $name;
+            if (!$form->has($name)) {
                 unset($data[$name]);
             }
         }

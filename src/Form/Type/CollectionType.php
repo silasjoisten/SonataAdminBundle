@@ -41,9 +41,17 @@ final class CollectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        \assert(\is_string($options['type']));
+        \assert(\is_bool($options['modifiable']));
+        \assert(null === $options['pre_bind_data_callback'] || $options['pre_bind_data_callback'] instanceof \Closure);
+
+        /** @var array<string, mixed> $typeOptions */
+        $typeOptions = $options['type_options'];
+        \assert(\is_array($typeOptions));
+
         $builder->addEventSubscriber(new ResizeFormListener(
             $options['type'],
-            $options['type_options'],
+            $typeOptions,
             $options['modifiable'],
             $options['pre_bind_data_callback']
         ));

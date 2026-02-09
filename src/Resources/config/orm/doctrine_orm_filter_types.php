@@ -23,6 +23,7 @@ use SensioLabs\AdminBundle\Filter\ORM\DateRangeFilter;
 use SensioLabs\AdminBundle\Filter\ORM\DateTimeFilter;
 use SensioLabs\AdminBundle\Filter\ORM\DateTimeRangeFilter;
 use SensioLabs\AdminBundle\Filter\ORM\EmptyFilter;
+use SensioLabs\AdminBundle\Filter\ORM\ModelAutocompleteFilter;
 use SensioLabs\AdminBundle\Filter\ORM\ModelFilter;
 use SensioLabs\AdminBundle\Filter\ORM\NullFilter;
 use SensioLabs\AdminBundle\Filter\ORM\NumberFilter;
@@ -66,6 +67,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sensiolabs.admin.orm.filter.type.model', ModelFilter::class)
             ->tag('sensiolabs.admin.filter.type', ['alias' => 'doctrine_orm_model'])
+
+        ->set('sensiolabs.admin.orm.filter.type.model_autocomplete', ModelAutocompleteFilter::class)
+            ->tag('sensiolabs.admin.filter.type', ['alias' => 'doctrine_orm_model_autocomplete'])
 
         ->set('sensiolabs.admin.orm.filter.type.null', NullFilter::class)
             ->tag('sensiolabs.admin.filter.type', ['alias' => 'doctrine_orm_null'])

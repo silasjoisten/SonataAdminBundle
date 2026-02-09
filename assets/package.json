@@ -76,6 +76,11 @@
                 "main": "./js/controllers/sidebar_collapse_controller.js",
                 "fetch": "eager",
                 "enabled": true
+            },
+            "autocomplete": {
+                "main": "./js/controllers/autocomplete_controller.js",
+                "fetch": "eager",
+                "enabled": true
             }
         },
         "importmap": {

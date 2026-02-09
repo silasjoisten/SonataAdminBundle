@@ -107,7 +107,7 @@ abstract class AbstractFormContractor implements FormContractorInterface
                     .' You SHOULD use `%s` instead.',
                     AdminType::class,
                     $fieldDescription->getName(),
-                    SensioLabsCollectionType::class
+                    CollectionType::class
                 ));
             }
 
@@ -119,7 +119,6 @@ abstract class AbstractFormContractor implements FormContractorInterface
             $options['empty_data'] = static fn (): object => $fieldDescription->getAssociationAdmin()->getNewInstance();
             $fieldDescription->setOption('edit', $fieldDescription->getOption('edit', 'admin'));
         } elseif ($this->isAnyInstanceOf($type, [
-            SensioLabsCollectionType::class,
             CollectionType::class,
         ])) {
             if (!$fieldDescription->hasAssociationAdmin()) {

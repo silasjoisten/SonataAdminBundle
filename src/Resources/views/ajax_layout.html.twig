@@ -20,42 +20,47 @@ file that was distributed with this source code.
     {% block show %}{% endblock %}
 
     {% if _list_table is not empty or _list_filters is not empty %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="navbar navbar-default sonata-list-table">
-                <div class="container-fluid">
-                    <div class="navbar-collapse">
-                        {% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}
-                            <div class="nav navbar-right btn-group">
-                                {% for mode, settings in admin.listModes %}
-                                    <a href="{{ admin.generateUrl('list', app.request.query.all|merge({_list_mode: mode})) }}" class="btn btn-default navbar-btn btn-sm{% if admin.getListMode() == mode %} active{% endif %}">
-                                        {% if mode == 'list' %}
-                                            {{ ux_icon('lucide:list', {class: 'w-4 h-4'}) }}
-                                        {% elseif mode == 'mosaic' %}
-                                            {{ ux_icon('lucide:layout-grid', {class: 'w-4 h-4'}) }}
-                                        {% else %}
-                                            {{ ux_icon('lucide:grid-3x3', {class: 'w-4 h-4'}) }}
-                                        {% endif %}
-                                    </a>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-
-                        {% if _list_filters_actions is not empty %}
-                            {{ _list_filters_actions|raw }}
-                        {% endif %}
-                    </div>
+    <div class="admin-ajax-content px-6 py-4">
+        {# Header bar with layout toggle and filter button - both on right side #}
+        <div class="flex items-center justify-end gap-3 mb-4">
+            {# Layout toggle (first) #}
+            {% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}
+                <div class="inline-flex h-9 rounded-lg overflow-hidden shadow-sm ring-1 ring-gray-200" role="group" aria-label="View mode">
+                    {% for mode, settings in admin.listModes %}
+                        {% set mode_label = mode == 'list' ? 'List view' : (mode == 'mosaic' ? 'Grid view' : mode|capitalize ~ ' view') %}
+                        {% set is_active = admin.getListMode() == mode %}
+                        <a href="{{ admin.generateUrl('list', app.request.query.all|merge({_list_mode: mode})) }}"
+                           class="inline-flex items-center justify-center w-9 h-9 transition-all duration-150 {% if is_active %}bg-primary-500 text-white{% else %}bg-white text-gray-500 hover:text-gray-700 hover:bg-gray-50{% endif %}"
+                           title="{{ mode_label }}"
+                           aria-label="{{ mode_label }}"
+                           {% if is_active %}aria-current="true"{% endif %}>
+                            {% if mode == 'list' %}
+                                {{ ux_icon('lucide:list', {class: 'w-4 h-4'}) }}
+                            {% elseif mode == 'mosaic' %}
+                                {{ ux_icon('lucide:layout-grid', {class: 'w-4 h-4'}) }}
+                            {% else %}
+                                {{ ux_icon('lucide:grid-3x3', {class: 'w-4 h-4'}) }}
+                            {% endif %}
+                        </a>
+                    {% endfor %}
                 </div>
-            </div>
+            {% endif %}
+
+            {# Filter button (second) #}
+            {% if _list_filters_actions is not empty %}
+                {{ _list_filters_actions|raw }}
+            {% endif %}
         </div>
 
+        {# Filters bar #}
         {% if _list_filters|trim %}
-            <div class="row">
+            <div class="mb-4">
                 {{ _list_filters|raw }}
             </div>
         {% endif %}
 
-        <div class="row">
+        {# Table content #}
+        <div>
             {{ _list_table|raw }}
         </div>
     </div>

@@ -28,7 +28,7 @@ file that was distributed with this source code.
         {% set translation_domain = sensiolabs_admin_translation_domain %}
     {% endif %}
     {% if help is not empty %}
-        {% set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' help-block sonata-ba-field-help')}) %}
+        {% set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' help-block sensiolabs-ba-field-help')}) %}
         {{ parent() }}
     {% endif %}
 {%- endblock form_help %}
@@ -312,10 +312,10 @@ file that was distributed with this source code.
 
 {% block form_row %}
     {% set show_label = show_label ?? true %}
-    {% set row_id = 'sonata-ba-field-container-'~id %}
+    {% set row_id = 'sensiolabs-ba-field-container-'~id %}
     {% set row_class = (row_attr.class|default('') ~ ' form-group' ~ (errors|length > 0 ? ' has-error'))|trim %}
     <div{% with {attr: row_attr|merge({id: row_id, class: row_class})} %}{{ block('attributes') }}{% endwith %}>
-        {% set div_class = 'sonata-ba-field' %}
+        {% set div_class = 'sensiolabs-ba-field' %}
 
         {% if label is same as(false) %}
             {% set div_class = div_class ~ ' sonata-collection-row-without-label' %}
@@ -339,18 +339,18 @@ file that was distributed with this source code.
         {% endif %}
 
         {% if sensiolabs_admin is defined and sensiolabs_admin_enabled %}
-            {% set div_class = div_class ~ ' sonata-ba-field-' ~ sensiolabs_admin.edit ~ '-' ~ sensiolabs_admin.inline %}
+            {% set div_class = div_class ~ ' sensiolabs-ba-field-' ~ sensiolabs_admin.edit ~ '-' ~ sensiolabs_admin.inline %}
         {% endif %}
 
         {% if errors|length > 0 %}
-            {% set div_class = div_class ~ ' sonata-ba-field-error' %}
+            {% set div_class = div_class ~ ' sensiolabs-ba-field-error' %}
         {% endif %}
 
         <div class="{{ div_class }}">
             {{ form_widget(form, {'horizontal': false, 'horizontal_input_wrapper_class': ''}) }} {# {'horizontal': false, 'horizontal_input_wrapper_class': ''} needed to avoid MopaBootstrapBundle messing with the DOM #}
 
             {% if errors|length > 0 %}
-                <div class="help-block sonata-ba-field-error-messages">
+                <div class="help-block sensiolabs-ba-field-error-messages">
                     {{ form_errors(form) }}
                 </div>
             {% endif %}
@@ -425,7 +425,7 @@ file that was distributed with this source code.
 {% endblock sensiolabs_type_immutable_array_widget %}
 
 {% block sensiolabs_type_immutable_array_widget_row %}
-    <div class="form-group{% if child.vars.errors|length > 0 %} has-error{% endif %}" id="sonata-ba-field-container-{{ id }}-{{ key }}">
+    <div class="form-group{% if child.vars.errors|length > 0 %} has-error{% endif %}" id="sensiolabs-ba-field-container-{{ id }}-{{ key }}">
 
         {{ form_label(child) }}
 
@@ -434,13 +434,13 @@ file that was distributed with this source code.
             {% set div_class = 'col-sm-9' %}
         {% endif %}
 
-        <div class="{{ div_class }} sonata-ba-field sonata-ba-field-{{ sensiolabs_admin.edit }}-{{ sensiolabs_admin.inline }}{% if child.vars.errors|length > 0 %} sonata-ba-field-error{% endif %}">
+        <div class="{{ div_class }} sensiolabs-ba-field sensiolabs-ba-field-{{ sensiolabs_admin.edit }}-{{ sensiolabs_admin.inline }}{% if child.vars.errors|length > 0 %} sensiolabs-ba-field-error{% endif %}">
             {{ form_widget(child, {'horizontal': false, 'horizontal_input_wrapper_class': ''}) }} {# {'horizontal': false, 'horizontal_input_wrapper_class': ''} needed to avoid MopaBootstrapBundle messing with the DOM #}
             {{ form_help(child) }}
         </div>
 
         {% if child.vars.errors|length > 0 %}
-            <div class="help-block sonata-ba-field-error-messages">
+            <div class="help-block sensiolabs-ba-field-error-messages">
                 {{ form_errors(child) }}
             </div>
         {% endif %}
@@ -492,11 +492,11 @@ file that was distributed with this source code.
             function choice_field_mask_show(val) {
                 var controlGroupIdFunc = function (field) {
                     // Most of fields are named with an underscore
-                    var defaultFieldId = '#sonata-ba-field-container-{{ main_form_name }}_' + field;
+                    var defaultFieldId = '#sensiolabs-ba-field-container-{{ main_form_name }}_' + field;
 
                     // Some fields may be named with a dash (like keys of immutable array form type)
                     if (!document.querySelector(defaultFieldId)) {
-                        defaultFieldId = '#sonata-ba-field-container-{{ main_form_name }}-' + field;
+                        defaultFieldId = '#sensiolabs-ba-field-container-{{ main_form_name }}-' + field;
                     }
 
                     // Some fields are rendered by form_widget (no container)
@@ -578,43 +578,37 @@ file that was distributed with this source code.
 
 {% block sensiolabs_type_model_list_widget %}
     <div id="field_container_{{ id }}" class="field-container">
-        <span id="field_widget_{{ id }}" class="field-short-description">
-            {% if sensiolabs_admin.value and sensiolabs_admin.field_description.associationadmin.urlSafeIdentifier(sensiolabs_admin.value) is not null %}
-                {{ render(path('sensiolabs_admin_short_object_information', {
-                    '_sensiolabs_admin': sensiolabs_admin.field_description.associationadmin.baseCodeRoute,
-                    'objectId': sensiolabs_admin.field_description.associationadmin.urlSafeIdentifier(sensiolabs_admin.value),
-                    'uniqid': sensiolabs_admin.field_description.associationadmin.uniqid,
-                    'linkParameters': sensiolabs_admin.field_description.option('link_parameters', {})
-                } + (
-                    sensiolabs_admin.field_description.associationadmin.hasRequest()
-                    ? sensiolabs_admin.field_description.associationadmin.request.attributes.get('_route_params', {})
-                    : {}
-                ) + app.request.query.all|default({})
-                )) }}
-            {% elseif sensiolabs_admin.field_description.option('placeholder', 'short_object_description_placeholder') %}
-                <span class="inner-field-short-description">
-                    {{ sensiolabs_admin.field_description.option('placeholder', 'short_object_description_placeholder')|trans({}, 'SonataAdminBundle') }}
-                </span>
-            {% endif %}
-        </span>
-        <span id="field_actions_{{ id }}" class="field-actions">
-            <span class="btn-group">
+        {# Selected item display #}
+        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+            <span id="field_widget_{{ id }}" class="flex-1 text-sm text-gray-700">
+                {% if sensiolabs_admin.value and sensiolabs_admin.field_description.associationadmin.urlSafeIdentifier(sensiolabs_admin.value) is not null %}
+                    {{ render(path('sensiolabs_admin_short_object_information', {
+                        '_sensiolabs_admin': sensiolabs_admin.field_description.associationadmin.baseCodeRoute,
+                        'objectId': sensiolabs_admin.field_description.associationadmin.urlSafeIdentifier(sensiolabs_admin.value),
+                        'uniqid': sensiolabs_admin.field_description.associationadmin.uniqid,
+                        'linkParameters': sensiolabs_admin.field_description.option('link_parameters', {})
+                    } + (
+                        sensiolabs_admin.field_description.associationadmin.hasRequest()
+                        ? sensiolabs_admin.field_description.associationadmin.request.attributes.get('_route_params', {})
+                        : {}
+                    ) + app.request.query.all|default({})
+                    )) }}
+                {% elseif sensiolabs_admin.field_description.option('placeholder', 'short_object_description_placeholder') %}
+                    <span class="text-gray-400 italic">
+                        {{ sensiolabs_admin.field_description.option('placeholder', 'short_object_description_placeholder')|trans({}, 'SensioLabsAdminBundle') }}
+                    </span>
+                {% endif %}
+            </span>
+
+            {# Action buttons #}
+            <span id="field_actions_{{ id }}" class="flex items-center gap-1">
                 {% if sensiolabs_admin.field_description.associationadmin.hasroute('list') and sensiolabs_admin.field_description.associationadmin.hasAccess('list') and btn_list %}
                     <a href="{{ sensiolabs_admin.field_description.associationadmin.generateUrl('list', {select: true}) }}"
                        onclick="return start_field_dialog_form_list_{{ id }}(this);"
-                       class="btn btn-info btn-sm sonata-ba-action"
-                       title="{{
-                           btn_translation_domain is same as(false)
-                           ? btn_list
-                           : btn_list|trans({}, btn_translation_domain)
-                       }}"
+                       class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:text-primary-600 hover:bg-primary-50 transition-colors sonata-ba-action"
+                       title="{{ btn_translation_domain is same as(false) ? btn_list : btn_list|trans({}, btn_translation_domain) }}"
                     >
-                        {{ ux_icon('lucide:list', {class: 'w-4 h-4 inline-block'}) }}
-                        {{
-                            btn_translation_domain is same as(false)
-                            ? btn_list
-                            : btn_list|trans({}, btn_translation_domain)
-                        }}
+                        {{ ux_icon('lucide:list', {class: 'w-4 h-4'}) }}
                     </a>
                 {% endif %}
 
@@ -624,21 +618,13 @@ file that was distributed with this source code.
                 %}
                     <a href="{{ sensiolabs_admin.field_description.associationadmin.generateUrl('create') }}"
                        onclick="return start_field_dialog_form_add_{{ id }}(this);"
-                       class="btn btn-success btn-sm sonata-ba-action"
-                       title="{{
-                           btn_translation_domain is same as(false)
-                           ? btn_add
-                           : btn_add|trans({}, btn_translation_domain)
-                       }}"
+                       class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:text-success-600 hover:bg-success-50 transition-colors sonata-ba-action"
+                       title="{{ btn_translation_domain is same as(false) ? btn_add : btn_add|trans({}, btn_translation_domain) }}"
                     >
-                        {{ ux_icon('lucide:plus-circle', {class: 'w-4 h-4 inline-block'}) }}
-                        {{
-                            btn_translation_domain is same as(false)
-                            ? btn_add
-                            : btn_add|trans({}, btn_translation_domain)
-                        }}
+                        {{ ux_icon('lucide:plus', {class: 'w-4 h-4'}) }}
                     </a>
                 {% endif %}
+
                 {% if sensiolabs_admin.field_description.associationadmin.hasroute('edit')
                     and sensiolabs_admin.field_description.associationadmin.hasAccess('edit')
                     and btn_edit
@@ -647,59 +633,54 @@ file that was distributed with this source code.
                         (sensiolabs_admin.field_description.associationadmin.idParameter) : sensiolabs_admin.field_description.associationadmin.urlSafeIdentifier(sensiolabs_admin.value)})
                     }}"
                        onclick="return start_field_dialog_form_edit_{{ id }}(this);"
-                       class="btn btn-warning btn-sm sonata-ba-action {% if sensiolabs_admin.value == null %}hidden{% endif %}"
-                       title="{{
-                           btn_translation_domain is same as(false)
-                           ? btn_edit
-                           : btn_edit|trans({}, btn_translation_domain)
-                       }}"
+                       class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:text-warning-600 hover:bg-warning-50 transition-colors sonata-ba-action sonata-ba-edit-btn {% if sensiolabs_admin.value == null %}hidden{% endif %}"
+                       title="{{ btn_translation_domain is same as(false) ? btn_edit : btn_edit|trans({}, btn_translation_domain) }}"
                     >
-                        {{ ux_icon('lucide:pencil', {class: 'w-4 h-4 inline-block'}) }}
-                        {{
-                            btn_translation_domain is same as(false)
-                            ? btn_edit
-                            : btn_edit|trans({}, btn_translation_domain)
-                        }}
+                        {{ ux_icon('lucide:pencil', {class: 'w-4 h-4'}) }}
                     </a>
                 {% endif %}
-            </span>
 
-            <span class="btn-group">
                 {% if btn_delete %}
                     <button
                         onclick="return remove_selected_element_{{ id }}(this);"
-                        class="btn btn-danger btn-sm sonata-ba-action"
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:text-error-600 hover:bg-error-50 transition-colors sonata-ba-action"
                         type="button"
-                        title="{{
-                            btn_translation_domain is same as(false)
-                            ? btn_delete
-                            : btn_delete|trans({}, btn_translation_domain)
-                        }}"
+                        title="{{ btn_translation_domain is same as(false) ? btn_delete : btn_delete|trans({}, btn_translation_domain) }}"
                     >
-                        {{ ux_icon('lucide:minus-circle', {class: 'w-4 h-4 inline-block'}) }}
-                        {{
-                            btn_translation_domain is same as(false)
-                            ? btn_delete
-                            : btn_delete|trans({}, btn_translation_domain)
-                        }}
+                        {{ ux_icon('lucide:x', {class: 'w-4 h-4'}) }}
                     </button>
                 {% endif %}
             </span>
-        </span>
+        </div>
 
-        <span style="display: none" >
-            {# Hidden text input cannot be required, because browser will throw error "An invalid form control with name='' is not focusable"  #}
+        {# Hidden input #}
+        <div class="hidden">
             {{ form_widget(form, {'required':false}) }}
-        </span>
+        </div>
 
-        <div class="modal fade" id="field_dialog_{{ id }}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"></h4>
+        {# Modal dialog with backdrop #}
+        <div id="field_dialog_{{ id }}"
+             class="fixed inset-0 z-50 hidden admin-model-modal"
+             role="dialog"
+             aria-labelledby="field_dialog_title_{{ id }}"
+             aria-hidden="true">
+            {# Backdrop #}
+            <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" data-dismiss="modal"></div>
+
+            {# Modal content #}
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="bg-white w-[90vw] h-[90vh] flex flex-col rounded-xl shadow-2xl">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white rounded-t-xl shrink-0">
+                        <h3 id="field_dialog_title_{{ id }}" class="modal-title text-lg font-semibold text-gray-900"></h3>
+                        <button type="button"
+                                class="inline-flex items-center gap-2 px-4 h-9 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors font-medium text-sm"
+                                data-dismiss="modal"
+                                aria-label="Close">
+                            {{ ux_icon('lucide:x', {class: 'w-4 h-4'}) }}
+                            {{ 'btn_close'|trans({}, 'SensioLabsAdminBundle') }}
+                        </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body flex-1 overflow-y-auto bg-gray-50 rounded-b-xl">
                     </div>
                 </div>
             </div>

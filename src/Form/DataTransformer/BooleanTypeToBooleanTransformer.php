@@ -17,37 +17,29 @@ use SensioLabs\AdminBundle\Form\Type\BooleanType;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * @phpstan-implements DataTransformerInterface<bool, int>
+ * @implements DataTransformerInterface<bool|null, int|null>
  */
 final class BooleanTypeToBooleanTransformer implements DataTransformerInterface
 {
-    /**
-     * @phpstan-throws void
-     *
-     * @phpstan-param mixed $value
-     */
     public function transform(mixed $value): ?int
     {
-        if (true === $value || BooleanType::TYPE_YES === (int) $value) {
+        if (true === $value || BooleanType::TYPE_YES === $value) {
             return BooleanType::TYPE_YES;
         }
-        if (false === $value || BooleanType::TYPE_NO === (int) $value) {
+
+        if (false === $value || BooleanType::TYPE_NO === $value) {
             return BooleanType::TYPE_NO;
         }
 
         return null;
     }
 
-    /**
-     * @phpstan-throws void
-     *
-     * @phpstan-param mixed $value
-     */
     public function reverseTransform(mixed $value): ?bool
     {
         if (BooleanType::TYPE_YES === $value) {
             return true;
         }
+
         if (BooleanType::TYPE_NO === $value) {
             return false;
         }

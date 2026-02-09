@@ -13,28 +13,69 @@ declare(strict_types=1);
 
 namespace SensioLabs\AdminBundle\Form\Type;
 
+use SensioLabs\AdminBundle\Form\EventListener\ResizeFormListener;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType as SymfonyCollectionType;
-use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * This type wrap native `collection` form type and render `add` and `delete`
- * buttons in standard Symfony` collection form type.
+ * Collection type for admin-backed associations (OneToMany, ManyToMany).
  *
- * @author Andrej Hudec <pulzarraider@gmail.com>
+ * Use this type when you have an association field that should render
+ * inline forms using the associated admin class.
+ *
+ * Example:
+ *     $form->add('speakers', CollectionType::class, [
+ *         'by_reference' => false,
+ *     ], [
+ *         'edit' => 'inline',
+ *         'inline' => 'table', // or 'tabs'
+ *     ]);
+ *
+ * For simple collections (list of strings, emails, etc.), use NativeCollectionType instead.
  */
 final class CollectionType extends AbstractType
 {
-    /**
-     * @phpstan-return class-string<FormTypeInterface>
-     */
-    public function getParent(): string
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        return SymfonyCollectionType::class;
+        $builder->addEventSubscriber(new ResizeFormListener(
+            $options['type'],
+            $options['type_options'],
+            $options['modifiable'],
+            $options['pre_bind_data_callback']
+        ));
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['btn_add'] = $options['btn_add'];
+        $view->vars['btn_translation_domain'] = $options['btn_translation_domain'];
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'modifiable' => false,
+            'type' => TextType::class,
+            'type_options' => [],
+            'pre_bind_data_callback' => null,
+            'btn_add' => 'link_add',
+            'btn_translation_domain' => 'SensioLabsAdminBundle',
+        ]);
+
+        $resolver->setAllowedTypes('modifiable', 'bool');
+        $resolver->setAllowedTypes('type', 'string');
+        $resolver->setAllowedTypes('type_options', 'array');
+        $resolver->setAllowedTypes('pre_bind_data_callback', ['null', 'callable']);
+        $resolver->setAllowedTypes('btn_add', ['null', 'bool', 'string']);
+        $resolver->setAllowedTypes('btn_translation_domain', ['null', 'bool', 'string']);
     }
 
     public function getBlockPrefix(): string
     {
-        return 'sensiolabs_type_native_collection';
+        return 'sensiolabs_type_collection';
     }
 }

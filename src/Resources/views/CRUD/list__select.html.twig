@@ -12,8 +12,21 @@ file that was distributed with this source code.
 {% extends get_admin_template('base_list_field', admin.code) %}
 
 {% block field %}
-    <a class="btn btn-primary" href="{{ admin.generateUrl(action|default('list')) }}">
-        {{ ux_icon('lucide:check', {class: 'w-4 h-4 inline-block'}) }}
-        {{ 'list_select'|trans({}, 'SonataAdminBundle') }}
+    {% set button_content = sensiolabs_config.getOption('list_action_button_content') %}
+    <a
+        href="#"
+        class="inline-flex items-center justify-center gap-1.5 p-2 rounded-lg text-success-600 hover:text-success-700 hover:bg-success-50 transition-colors select_link"
+        title="{{ 'list_select'|trans({}, 'SensioLabsAdminBundle') }}"
+    >
+        {% if button_content == 'icon' or button_content == 'all' %}
+            {{ ux_icon('lucide:check', {class: 'w-4 h-4'}) }}
+        {% endif %}
+        {% if button_content == 'text' or button_content == 'all' %}
+            <span class="text-sm font-medium">{{ 'list_select'|trans({}, 'SensioLabsAdminBundle') }}</span>
+        {% else %}
+            <span class="sr-only">
+                {{ 'list_select'|trans({}, 'SensioLabsAdminBundle') }}
+            </span>
+        {% endif %}
     </a>
 {% endblock %}

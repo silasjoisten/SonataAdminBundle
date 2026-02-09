@@ -15,6 +15,8 @@ namespace SensioLabs\AdminBundle\Tests\App;
 
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use SensioLabs\AdminBundle\SensioLabsAdminBundle;
+use Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle;
+use Sonata\Twig\Bridge\Symfony\SonataTwigBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -40,7 +42,9 @@ final class AppKernel extends Kernel
             new KnpMenuBundle(),
             new StimulusBundle(),
             new UXIconsBundle(),
+            new SonataDoctrineBundle(),
             new SensioLabsAdminBundle(),
+            new SonataTwigBundle(),
         ];
     }
 

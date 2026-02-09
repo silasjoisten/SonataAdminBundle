@@ -510,13 +510,9 @@
         <source>logout</source>
         <target>Sair</target>
       </trans-unit>
-      <trans-unit id="date_range_start">
-        <source>date_range_start</source>
-        <target>De</target>
-      </trans-unit>
-      <trans-unit id="date_range_end">
-        <source>date_range_end</source>
-        <target>Até</target>
+      <trans-unit id="btn_close">
+        <source>btn_close</source>
+        <target>Fechar</target>
       </trans-unit>
     </body>
   </file>

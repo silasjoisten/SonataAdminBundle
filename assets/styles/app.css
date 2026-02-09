@@ -954,6 +954,98 @@ html.sidebar-collapsed .admin-main {
 }
 
 /* ============================================
+   MODEL LIST FIELD
+   ============================================ */
+.field-container {
+    @apply w-full;
+}
+
+.field-container .inner-field-short-description {
+    @apply text-gray-400 italic;
+}
+
+/* ============================================
+   MODEL LIST MODAL
+   ============================================ */
+.admin-model-modal .modal-body {
+    @apply p-0;
+}
+
+/* Content area inside modal */
+.admin-model-modal .admin-content {
+    @apply px-5 py-5;
+}
+
+/* Simplify the layout inside modal - hide breadcrumbs and mobile menu */
+.admin-model-modal .admin-breadcrumb-subtle {
+    @apply hidden;
+}
+
+.admin-model-modal .lg\:hidden {
+    @apply hidden;
+}
+
+/* Table styling in modal - make rows clickable */
+.admin-model-modal .admin-table-row {
+    @apply cursor-pointer;
+}
+
+.admin-model-modal .admin-table-row:hover {
+    @apply bg-primary-50;
+}
+
+.admin-model-modal .sensiolabs-ba-list-field {
+    @apply cursor-pointer;
+}
+
+/* AJAX content container - provides padding for list view */
+.admin-model-modal .admin-ajax-content {
+    @apply px-5 py-5;
+}
+
+/* Filter bar in modal */
+.admin-model-modal .admin-filters-bar {
+    @apply mb-4;
+}
+
+/* Filter panel (dropdown) in modal */
+.admin-model-modal .admin-filters-panel {
+    @apply mb-4;
+}
+
+/* Hide unnecessary elements in select mode */
+.admin-model-modal .admin-batch-actions {
+    @apply hidden;
+}
+
+/* Adjust card styling in modal */
+.admin-model-modal .admin-card {
+    @apply shadow-none border-0;
+}
+
+.admin-model-modal .admin-card-footer {
+    @apply px-4 py-3;
+}
+
+/* Form actions footer in modal */
+.admin-model-modal .sensiolabs-ba-form-actions {
+    @apply mt-0 mx-0 px-5 py-4
+           bg-gray-50 border-t border-gray-200
+           flex flex-wrap gap-3 items-center
+           rounded-b-xl;
+}
+
+/* Divider between buttons */
+.admin-model-modal .admin-divider-vertical {
+    @apply w-px h-6 bg-gray-200 mx-1;
+}
+
+/* Sticky form footer in modal */
+.admin-model-modal .admin-sticky-footer {
+    @apply sticky bottom-0;
+}
+
+/* ============================================
    TABLE COMPONENT
    ============================================ */
 .admin-table-wrapper {
@@ -2266,16 +2358,16 @@ html.sidebar-collapsed .admin-main {
     @apply hidden;
 }
 
-/* Sonata compatibility */
-.sonata-ba-field-error-messages {
+/* SensioLabs Admin field styling */
+.sensiolabs-ba-field-error-messages {
     @apply text-xs text-error-600 mt-1.5 flex items-center gap-1;
 }
 
-.sonata-ba-field-error {
+.sensiolabs-ba-field-error {
     @apply border-error-500;
 }
 
-.sonata-ba-field-inline-table [id$="_delete"]:checked ~ * {
+.sensiolabs-ba-field-inline-table [id$="_delete"]:checked ~ * {
     @apply opacity-50;
 }
 
@@ -2320,7 +2412,7 @@ html.sidebar-collapsed .admin-main {
 
 /* Help block */
 .admin-shell .help-block,
-.admin-shell .sonata-ba-field-help {
+.admin-shell .sensiolabs-ba-field-help {
     @apply text-xs text-gray-500 mt-1.5;
 }
 

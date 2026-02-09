@@ -30,7 +30,7 @@ use SensioLabs\AdminBundle\Form\Type\ModelHiddenType;
 use SensioLabs\AdminBundle\Form\Type\ModelListType;
 use SensioLabs\AdminBundle\Form\Type\ModelReferenceType;
 use SensioLabs\AdminBundle\Form\Type\ModelType;
-use SensioLabs\AdminBundle\Form\Type\SensioLabsCollectionType;
+use SensioLabs\AdminBundle\Form\Type\NativeCollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType as SymfonyChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
@@ -62,22 +62,22 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->tag('form.type', ['alias' => 'sensiolabs_type_model_autocomplete'])
 
         ->set('sensiolabs.admin.form.type.collection', CollectionType::class)
-            ->tag('form.type', ['alias' => 'sensiolabs_type_native_collection'])
+            ->tag('form.type', ['alias' => 'sensiolabs_type_collection'])
 
-        ->set('sensiolabs.admin.form.type.immutable_array', ImmutableArrayType::class)
-            ->tag('form.type', ['alias' => 'sensiolabs_type_immutable_array'])
+        ->set('sensiolabs.admin.form.type.native_collection', NativeCollectionType::class)
+            ->tag('form.type', ['alias' => 'sensiolabs_type_native_collection'])
 
         ->set('sensiolabs.admin.form.type.boolean', BooleanType::class)
             ->tag('form.type', ['alias' => 'sensiolabs_type_boolean'])
-
-        ->set('sensiolabs.admin.form.type.sensiolabs_collection', SensioLabsCollectionType::class)
-            ->tag('form.type', ['alias' => 'sensiolabs_type_collection'])
 
         ->set('sensiolabs.admin.form.type.date_range', DateRangeType::class)
             ->tag('form.type', ['alias' => 'sensiolabs_type_date_range'])
 
         ->set('sensiolabs.admin.form.type.datetime_range', DateTimeRangeType::class)
             ->tag('form.type', ['alias' => 'sensiolabs_type_datetime_range'])
+
+        ->set('sensiolabs.admin.form.type.immutable_array', ImmutableArrayType::class)
+            ->tag('form.type', ['alias' => 'sensiolabs_type_immutable_array'])
 
         ->set('sensiolabs.admin.doctrine_orm.form.type.choice_field_mask', ChoiceFieldMaskType::class)
             ->tag('form.type', ['alias' => 'sensiolabs_type_choice_field_mask'])

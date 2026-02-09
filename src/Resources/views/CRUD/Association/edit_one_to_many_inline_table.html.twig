@@ -1,74 +1,69 @@
 {#
 
-This file is part of the Sonata package.
+This file is part of the SensioLabs Admin Bundle package.
 
-(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+(c) SensioLabs
 
 For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
 #}
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            {% for field_name, nested_field in form.children|first.children %}
-                {% if field_name == '_delete' %}
-                    <th>{{ 'action_delete'|trans({}, 'SonataAdminBundle') }}</th>
-                {% else %}
-                    <th
-                        {% if nested_field.vars['required']|default(false) %}
-                            class="required"
-                        {% endif %}
-                        {% if nested_field.vars['attr']['hidden']|default(false) %}
-                            style="display:none;"
-                        {% endif %}
-                    >
-                        {% if nested_field.vars.translation_domain is same as(false) %}
-                            {{ nested_field.vars.label }}
-                        {% else %}
-                            {% set translationDomain = nested_field.vars.translation_domain|default(nested_field.vars['sensiolabs_admin'].admin.translationDomain|default(null)) %}
-                            {{ nested_field.vars.label|trans({}, translationDomain) }}
-                        {% endif %}
-                    </th>
-                {% endif %}
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody class="sonata-ba-tbody">
-        {% for nested_group_field_name, nested_group_field in form.children %}
+<div class="sensiolabs-ba-field-inline-table overflow-x-auto rounded-lg border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
             <tr>
-                {% for field_name, nested_field in nested_group_field.children %}
-                    <td class="
-                        sonata-ba-td-{{ id }}-{{ field_name }}
-                        form-group
-                        control-group
-                        {% if nested_field.vars.errors|default(false) %} error has-error sonata-ba-field-error{% endif %}
-                        "
-                        {% if nested_field.vars['attr']['hidden']|default(false) %}
-                            style="display:none;"
-                        {% endif %}
-                    >
-                        {% if sensiolabs_admin.field_description.associationadmin.formfielddescriptions[field_name] is defined %}
-                            {{ form_widget(nested_field) }}
-
-                            {{ form_help(nested_field) }}
-
-                            {% set dummy = nested_group_field.setrendered %}
-                        {% else %}
-                            {% if field_name == '_delete' %}
-                                {{ form_widget(nested_field, { label: false }) }}
+                {% for field_name, nested_field in form.children|first.children %}
+                    {% if field_name == '_delete' %}
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">
+                            {{ 'action_delete'|trans({}, 'SensioLabsAdminBundle') }}
+                        </th>
+                    {% else %}
+                        <th
+                            class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider {% if nested_field.vars['required']|default(false) %}required{% endif %}"
+                            {% if nested_field.vars['attr']['hidden']|default(false) %}style="display:none;"{% endif %}
+                        >
+                            {% if nested_field.vars.translation_domain is same as(false) %}
+                                {{ nested_field.vars.label }}
                             {% else %}
-                                {{ form_widget(nested_field) }}
+                                {% set translationDomain = nested_field.vars.translation_domain|default(nested_field.vars['sensiolabs_admin'].admin.translationDomain|default(null)) %}
+                                {{ nested_field.vars.label|trans({}, translationDomain) }}
                             {% endif %}
-                        {% endif %}
-                        {% if nested_field.vars.errors|default(false) %}
-                            <div class="help-block help-inline sonata-ba-field-error-messages">
-                                {{ form_errors(nested_field) }}
-                            </div>
-                        {% endif %}
-                    </td>
+                            {% if nested_field.vars['required']|default(false) %}<span class="text-error-500 ml-0.5">*</span>{% endif %}
+                        </th>
+                    {% endif %}
                 {% endfor %}
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody class="sensiolabs-ba-tbody bg-white divide-y divide-gray-100">
+            {% for nested_group_field_name, nested_group_field in form.children %}
+                <tr class="sensiolabs-ba-field-inline-row hover:bg-gray-50 transition-colors">
+                    {% for field_name, nested_field in nested_group_field.children %}
+                        <td
+                            class="px-4 py-3 sensiolabs-ba-td-{{ id }}-{{ field_name }} {% if nested_field.vars.errors|default(false) %}sensiolabs-ba-field-error{% endif %}"
+                            {% if nested_field.vars['attr']['hidden']|default(false) %}style="display:none;"{% endif %}
+                        >
+                            {% if sensiolabs_admin.field_description.associationadmin.formfielddescriptions[field_name] is defined %}
+                                {{ form_widget(nested_field) }}
+                                {{ form_help(nested_field) }}
+                                {% set dummy = nested_group_field.setrendered %}
+                            {% else %}
+                                {% if field_name == '_delete' %}
+                                    <div class="flex items-center justify-center">
+                                        {{ form_widget(nested_field, { label: false, attr: { class: 'admin-form-checkbox' } }) }}
+                                    </div>
+                                {% else %}
+                                    {{ form_widget(nested_field) }}
+                                {% endif %}
+                            {% endif %}
+                            {% if nested_field.vars.errors|default(false) %}
+                                <div class="sensiolabs-ba-field-error-messages">
+                                    {{ form_errors(nested_field) }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

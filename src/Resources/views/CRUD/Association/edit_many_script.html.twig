@@ -67,8 +67,28 @@ This code manages the many-to-[one|many] association field popup
         initialize_popup_{{ id }}();
 
         var target = event.currentTarget;
+        var href = target.getAttribute('href');
+        var element = target.closest('#field_dialog_{{ id }} .sensiolabs-ba-list-field');
 
-        if (!target.getAttribute('href') || target.getAttribute('href') === '#') {
+        // Check if this is a selection click (link inside a list field)
+        if (element) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            Admin.log('[{{ id }}|field_dialog_form_list_link] the user select one element, update input and hide the modal');
+
+            var input = document.getElementById('{{ id }}');
+            // Support both data-object-id (new) and objectId (legacy) attributes
+            var objectId = element.getAttribute('data-object-id') || element.dataset.objectId || element.getAttribute('objectId');
+            input.value = objectId;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+
+            Admin.hideModal(field_dialog_{{ id }});
+            return;
+        }
+
+        // Skip if no valid href for navigation
+        if (!href || href === '#') {
             return;
         }
 
@@ -77,38 +97,23 @@ This code manages the many-to-[one|many] association field popup
 
         Admin.log('[{{ id }}|field_dialog_form_list_link] handle link click in a list');
 
-        var element = target.closest('#field_dialog_{{ id }} .sonata-ba-list-field');
+        Admin.log('[{{ id }}|field_dialog_form_list_link] the user does not click on a row column, make ajax call to retrieve inner html');
 
-        // the user does not click on a row column
-        if (!element) {
-            Admin.log('[{{ id }}|field_dialog_form_list_link] the user does not click on a row column, make ajax call to retrieve inner html');
+        try {
+            var response = await fetch(href, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            var html = await response.text();
 
-            try {
-                var response = await fetch(target.getAttribute('href'), {
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                });
-                var html = await response.text();
+            Admin.log('[{{ id }}|field_dialog_form_list_link] callback success, attach valid js event');
 
-                Admin.log('[{{ id }}|field_dialog_form_list_link] callback success, attach valid js event');
+            field_dialog_content_{{ id }}.innerHTML = html;
+            field_dialog_form_list_handle_action_{{ id }}();
 
-                field_dialog_content_{{ id }}.innerHTML = html;
-                field_dialog_form_list_handle_action_{{ id }}();
-
-                Admin.shared_setup(field_dialog_{{ id }});
-            } catch (error) {
-                console.error('[{{ id }}|field_dialog_form_list_link] Error:', error);
-            }
-
-            return;
+            Admin.shared_setup(field_dialog_{{ id }});
+        } catch (error) {
+            console.error('[{{ id }}|field_dialog_form_list_link] Error:', error);
         }
-
-        Admin.log('[{{ id }}|field_dialog_form_list_link] the user select one element, update input and hide the modal');
-
-        var input = document.getElementById('{{ id }}');
-        input.value = element.getAttribute('objectId');
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-
-        Admin.hideModal(field_dialog_{{ id }});
     }
 
     // Handle actions on the modal list
@@ -481,17 +486,17 @@ This code manages the many-to-[one|many] association field popup
 
             // Skip if object is missing
             if (!objectId) {
-                document.getElementById('field_widget_{{ id }}').innerHTML = '{{ 'short_object_description_placeholder'|trans({}, 'SonataAdminBundle') }}';
+                document.getElementById('field_widget_{{ id }}').innerHTML = '{{ 'short_object_description_placeholder'|trans({}, 'SensioLabsAdminBundle') }}';
 
                 {% if btn_edit %}
-                    var editBtn = document.querySelector('#field_actions_{{ id }} a.btn-warning');
+                    var editBtn = document.querySelector('#field_actions_{{ id }} .sonata-ba-edit-btn');
                     if (editBtn) editBtn.classList.add('hidden');
                 {% endif %}
 
                 return;
             }
 
-            document.getElementById('field_widget_{{ id }}').innerHTML = '<span><img src="{{ asset('bundles/sensiolabsadmin/images/ajax-loader.gif') }}" style="vertical-align: middle; margin-right: 10px"/>{{ 'loading_information'|trans([], 'SonataAdminBundle') }}</span>';
+            document.getElementById('field_widget_{{ id }}').innerHTML = '<span><img src="{{ asset('bundles/sensiolabsadmin/images/ajax-loader.gif') }}" style="vertical-align: middle; margin-right: 10px"/>{{ 'loading_information'|trans([], 'SensioLabsAdminBundle') }}</span>';
 
             try {
                 var response = await fetch('{{ path('sensiolabs_admin_short_object_information',{
@@ -518,7 +523,7 @@ This code manages the many-to-[one|many] association field popup
                     associationadmin.generateUrl('edit', {(associationadmin.idParameter) : 'OBJECT_ID'})
                 }}'.replace('OBJECT_ID', objectId);
 
-                var editBtn = document.querySelector('#field_actions_{{ id }} a.btn-warning');
+                var editBtn = document.querySelector('#field_actions_{{ id }} .sonata-ba-edit-btn');
                 if (editBtn) {
                     editBtn.classList.remove('hidden');
                     editBtn.setAttribute('href', edit_button_url);

@@ -15,12 +15,12 @@ namespace SensioLabs\AdminBundle\Builder;
 
 use SensioLabs\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use SensioLabs\AdminBundle\Form\Type\AdminType;
+use SensioLabs\AdminBundle\Form\Type\CollectionType;
 use SensioLabs\AdminBundle\Form\Type\ModelAutocompleteType;
 use SensioLabs\AdminBundle\Form\Type\ModelHiddenType;
 use SensioLabs\AdminBundle\Form\Type\ModelListType;
 use SensioLabs\AdminBundle\Form\Type\ModelReferenceType;
 use SensioLabs\AdminBundle\Form\Type\ModelType;
-use SensioLabs\AdminBundle\Form\Type\SensioLabsCollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;

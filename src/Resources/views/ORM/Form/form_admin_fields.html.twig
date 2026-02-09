@@ -68,6 +68,7 @@ file that was distributed with this source code.
     {% endif %}
 {% endblock %}
 
+{# Block for SensioLabs\AdminBundle\Form\Type\CollectionType #}
 {% block sensiolabs_type_collection_widget %}
     {% if sensiolabs_admin.field_description.mappingtype == constant('Doctrine\\ORM\\Mapping\\ClassMetadata::ONE_TO_MANY') %}
         {{ block('sensiolabs_admin_orm_one_to_many_widget') }}

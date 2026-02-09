@@ -29,7 +29,7 @@ file that was distributed with this source code.
 
     function apply_position_value_{{ id }}() {
         // Update the input value position
-        var elements = document.querySelectorAll('div#field_container_{{ id }} .sonata-ba-tabs .sonata-ba-field-{{ id }}-{{ sensiolabs_admin.field_description.option('sortable') }}');
+        var elements = document.querySelectorAll('div#field_container_{{ id }} .sonata-ba-tabs .sensiolabs-ba-field-{{ id }}-{{ sensiolabs_admin.field_description.option('sortable') }}');
 
         elements.forEach(function(element, index) {
             var parent = element.closest('.nav-tabs-custom');
@@ -58,14 +58,14 @@ file that was distributed with this source code.
         });
 
         // Update position values
-        var inputs = document.querySelectorAll('div#field_container_{{ id }} .sonata-ba-tabs .sonata-ba-field-{{ id }}-{{ sensiolabs_admin.field_description.option('sortable') }} input');
+        var inputs = document.querySelectorAll('div#field_container_{{ id }} .sonata-ba-tabs .sensiolabs-ba-field-{{ id }}-{{ sensiolabs_admin.field_description.option('sortable') }} input');
         inputs.forEach(function(input, index) {
             input.value = index + 1;
         });
     }
 
     // Refresh the sortable option when a new element is added
-    var fieldContainer = document.getElementById('sonata-ba-field-container-{{ id }}');
+    var fieldContainer = document.getElementById('sensiolabs-ba-field-container-{{ id }}');
     if (fieldContainer) {
         fieldContainer.addEventListener('sensiolabs.add_element', function() {
             apply_position_value_{{ id }}();

@@ -34,6 +34,10 @@
         <source>btn_filter</source>
         <target>Filter</target>
       </trans-unit>
+      <trans-unit id="btn_close">
+        <source>btn_close</source>
+        <target>Close</target>
+      </trans-unit>
       <trans-unit id="btn_advanced_filters">
         <source>btn_advanced_filters</source>
         <target>Advanced filters</target>
@@ -257,6 +261,14 @@
       <trans-unit id="label_type_no">
         <source>label_type_no</source>
         <target>no</target>
+      </trans-unit>
+      <trans-unit id="date_range_start">
+        <source>date_range_start</source>
+        <target>From</target>
+      </trans-unit>
+      <trans-unit id="date_range_end">
+        <source>date_range_end</source>
+        <target>To</target>
       </trans-unit>
       <trans-unit id="label_type_contains">
         <source>label_type_contains</source>

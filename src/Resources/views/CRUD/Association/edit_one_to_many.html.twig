@@ -43,28 +43,28 @@ file that was distributed with this source code.
         {% if sensiolabs_admin.edit == 'inline' %}
 
             {% if display_create_button %}
-                <span id="field_actions_{{ id }}" >
+                <div id="field_actions_{{ id }}" class="mt-3">
                     <a
                         href="{{ sensiolabs_admin.field_description.associationadmin.generateUrl(
                             'create',
                             sensiolabs_admin.field_description.getOption('link_parameters', {})
                         ) }}"
                         onclick="return start_field_retrieve_{{ id }}(this);"
-                        class="btn btn-success btn-sm sonata-ba-action"
+                        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-success-600 text-white hover:bg-success-700 transition-colors sonata-ba-action"
                         title="{{
                             btn_translation_domain is same as(false)
                             ? btn_add
                             : btn_add|trans({}, btn_translation_domain)
                         }}"
                     >
-                        {{ ux_icon('lucide:plus-circle', {class: 'w-4 h-4 inline-block'}) }}
+                        {{ ux_icon('lucide:plus', {class: 'w-4 h-4'}) }}
                         {{
                             btn_translation_domain is same as(false)
                             ? btn_add
                             : btn_add|trans({}, btn_translation_domain)
                         }}
                     </a>
-                </span>
+                </div>
             {% endif %}
 
             {# add code for the sortable options #}
@@ -80,7 +80,7 @@ file that was distributed with this source code.
             {% include '@SensioLabsAdmin/CRUD/Association/edit_one_script.html.twig' %}
 
         {% else %}
-            <span id="field_actions_{{ id }}" >
+            <div id="field_actions_{{ id }}" class="mt-3">
                 {% if display_create_button %}
                     <a
                         href="{{ sensiolabs_admin.field_description.associationadmin.generateUrl(
@@ -88,14 +88,14 @@ file that was distributed with this source code.
                             sensiolabs_admin.field_description.getOption('link_parameters', {})
                         ) }}"
                         onclick="return start_field_dialog_form_add_{{ id }}(this);"
-                        class="btn btn-success btn-sm sonata-ba-action"
+                        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-success-600 text-white hover:bg-success-700 transition-colors sonata-ba-action"
                         title="{{
                             btn_translation_domain is same as(false)
                             ? btn_add
                             : btn_add|trans({}, btn_translation_domain)
                         }}"
                     >
-                        {{ ux_icon('lucide:plus-circle', {class: 'w-4 h-4 inline-block'}) }}
+                        {{ ux_icon('lucide:plus', {class: 'w-4 h-4'}) }}
                         {{
                             btn_translation_domain is same as(false)
                             ? btn_add
@@ -105,7 +105,7 @@ file that was distributed with this source code.
                     {% include '@SensioLabsAdmin/CRUD/Association/edit_modal.html.twig' %}
                     {% include '@SensioLabsAdmin/CRUD/Association/edit_many_script.html.twig' %}
                 {% endif %}
-            </span>
+            </div>
         {% endif %}
     </div>
 {% endif %}

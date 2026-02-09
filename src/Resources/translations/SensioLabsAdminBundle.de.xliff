@@ -518,13 +518,9 @@
         <source>logout</source>
         <target>Abmelden</target>
       </trans-unit>
-      <trans-unit id="date_range_start">
-        <source>date_range_start</source>
-        <target>Von</target>
-      </trans-unit>
-      <trans-unit id="date_range_end">
-        <source>date_range_end</source>
-        <target>Bis</target>
+      <trans-unit id="btn_close">
+        <source>btn_close</source>
+        <target>Schließen</target>
       </trans-unit>
     </body>
   </file>

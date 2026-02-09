@@ -510,13 +510,9 @@
         <source>logout</source>
         <target>Déconnexion</target>
       </trans-unit>
-      <trans-unit id="date_range_start">
-        <source>date_range_start</source>
-        <target>Du</target>
-      </trans-unit>
-      <trans-unit id="date_range_end">
-        <source>date_range_end</source>
-        <target>Au</target>
+      <trans-unit id="btn_close">
+        <source>btn_close</source>
+        <target>Fermer</target>
       </trans-unit>
     </body>
   </file>

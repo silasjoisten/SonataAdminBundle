@@ -12,7 +12,7 @@ file that was distributed with this source code.
 {# NEXT_MAJOR: Remove this #}
 {% deprecated 'The "base_list_flat_field.html.twig" template is deprecated since sonata-project/admin-bundle version 4.3 and will be removed in 5.0.' %}
 
-<span class="sonata-ba-list-field sonata-ba-list-field-{{ field_description.type }}" objectId="{{ admin.id(object) }}">
+<span class="sensiolabs-ba-list-field sensiolabs-ba-list-field-{{ field_description.type }}" data-object-id="{{ admin.id(object) }}">
     {% set route_name = field_description.option('route').name|default(sensiolabs_config.getOption('default_admin_route')) %}
     {% set route_parameters = field_description.option('route').parameters|default([]) %}
 

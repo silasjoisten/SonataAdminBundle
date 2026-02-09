@@ -37,18 +37,7 @@ const Admin = {
     setup_list_modal(modal) {
         Admin.log('[core|setup_list_modal] configure modal on', modal);
 
-        const modalDialog = modal.querySelector('.modal-content');
-        if (modalDialog) {
-            modalDialog.style.maxWidth = '90%';
-            modalDialog.style.width = '90%';
-        }
-
-        const modalBody = modal.querySelector('.modal-body');
-        if (modalBody) {
-            modalBody.style.maxHeight = '80vh';
-            modalBody.style.overflowY = 'auto';
-        }
-
+        // Modal is styled with Tailwind classes, just dispatch the event for custom handlers
         modal.dispatchEvent(new CustomEvent('sensiolabs-admin-setup-list-modal'));
     },
 

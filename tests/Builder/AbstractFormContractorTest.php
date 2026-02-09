@@ -24,10 +24,10 @@ use SensioLabs\AdminBundle\Form\Type\AdminType;
 use SensioLabs\AdminBundle\Form\Type\ModelAutocompleteType;
 use SensioLabs\AdminBundle\Form\Type\ModelHiddenType;
 use SensioLabs\AdminBundle\Form\Type\ModelListType;
+use SensioLabs\AdminBundle\Form\Type\CollectionType;
 use SensioLabs\AdminBundle\Form\Type\ModelType;
 use SensioLabs\AdminBundle\Model\ModelManagerInterface;
 use SensioLabs\AdminBundle\Tests\Fixtures\Form\MyCustomType;
-use SensioLabs\AdminBundle\Form\Type\SensioLabsCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormRegistryInterface;
@@ -116,7 +116,7 @@ final class AbstractFormContractorTest extends TestCase
             AdminType::class,
         ];
         $collectionTypes = [
-            SensioLabsCollectionType::class,
+            CollectionType::class,
         ];
 
         // model types
@@ -237,7 +237,7 @@ final class AbstractFormContractorTest extends TestCase
         ];
 
         yield 'CollectionType, no association admin' => [
-            SensioLabsCollectionType::class,
+            CollectionType::class,
         ];
     }
 }

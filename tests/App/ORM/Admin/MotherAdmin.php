@@ -16,8 +16,8 @@ namespace SensioLabs\AdminBundle\Tests\App\ORM\Admin;
 use SensioLabs\AdminBundle\Admin\AbstractAdmin;
 use SensioLabs\AdminBundle\Datagrid\ListMapper;
 use SensioLabs\AdminBundle\Form\FormMapper;
+use SensioLabs\AdminBundle\Form\Type\CollectionType;
 use SensioLabs\AdminBundle\Tests\App\ORM\Entity\Mother;
-use SensioLabs\AdminBundle\Form\Type\SensioLabsCollectionType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -32,7 +32,7 @@ final class MotherAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $form->add('children', SensioLabsCollectionType::class, [
+        $form->add('children', CollectionType::class, [
             'by_reference' => false,
             'constraints' => [
                 new Assert\Valid(),

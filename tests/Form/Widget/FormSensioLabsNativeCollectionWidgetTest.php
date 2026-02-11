@@ -15,7 +15,7 @@ namespace SensioLabs\AdminBundle\Tests\Form\Widget;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use SensioLabs\AdminBundle\Form\Extension\Field\Type\FormTypeFieldExtension;
-use SensioLabs\AdminBundle\Form\Type\CollectionType;
+use SensioLabs\AdminBundle\Form\Type\NativeCollectionType;
 use SensioLabs\AdminBundle\Tests\Fixtures\TestExtension;
 use Symfony\Component\Form\FormExtensionInterface;
 use Symfony\Component\Form\FormTypeGuesserInterface;
@@ -35,12 +35,12 @@ final class FormSensioLabsNativeCollectionWidgetTest extends BaseWidgetTestCase
      */
     public static function providePrototypeIsDeletableNoMatterTheShrinkabilityCases(): iterable
     {
-        yield 'shrinkable collection' => [['allow_delete' => true]];
-        yield 'unshrinkable collection' => [['allow_delete' => false]];
+        yield 'deletable collection' => [[true]];
+        yield 'non-deletable collection' => [[false]];
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param array{bool} $options
      */
     #[DataProvider('providePrototypeIsDeletableNoMatterTheShrinkabilityCases')]
     public function testPrototypeIsDeletableNoMatterTheShrinkability(array $options): void
@@ -48,7 +48,7 @@ final class FormSensioLabsNativeCollectionWidgetTest extends BaseWidgetTestCase
         $choice = $this->factory->create(
             $this->getChoiceClass(),
             null,
-            ['allow_add' => true] + $options
+            ['allow_add' => true, 'allow_delete' => $options[0]]
         );
 
         $html = $this->renderWidget($choice->createView());
@@ -81,6 +81,6 @@ final class FormSensioLabsNativeCollectionWidgetTest extends BaseWidgetTestCase
      */
     protected function getChoiceClass(): string
     {
-        return CollectionType::class;
+        return NativeCollectionType::class;
     }
 }

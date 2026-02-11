@@ -51,7 +51,7 @@ final class CRUDControllerTest extends WebTestCase
         );
         static::assertCount(
             1,
-            $crawler->filter('.help-block.sonata-ba-field-help:contains("Help me!")')
+            $crawler->filter('.help-block.sensiolabs-ba-field-help:contains("Help me!")')
         );
     }
 
@@ -66,7 +66,7 @@ final class CRUDControllerTest extends WebTestCase
         static::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         static::assertCount(
             1,
-            $crawler->filter('.sonata-ba-field li:contains("This field is missing.")')
+            $crawler->filter('.sensiolabs-ba-field-error-messages li:contains("This field is missing.")')
         );
     }
 
@@ -80,7 +80,7 @@ final class CRUDControllerTest extends WebTestCase
         static::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         static::assertCount(
             1,
-            $crawler->filter('.sonata-ba-field li:contains("This collection should contain 2 elements or more.")')
+            $crawler->filter('.sensiolabs-ba-field-error-messages li:contains("This collection should contain 2 elements or more.")')
         );
     }
 
@@ -95,7 +95,7 @@ final class CRUDControllerTest extends WebTestCase
         static::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         static::assertCount(
             1,
-            $crawler->filter('.help-block.sonata-ba-field-help:contains("Elements main field help message")')
+            $crawler->filter('.help-block.sensiolabs-ba-field-help:contains("Elements main field help message")')
         );
     }
 
@@ -110,7 +110,7 @@ final class CRUDControllerTest extends WebTestCase
         static::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         static::assertCount(
             1,
-            $crawler->filter('.help-block.sonata-ba-field-help:contains("Elements sub field help message")')
+            $crawler->filter('.help-block.sensiolabs-ba-field-help:contains("Elements sub field help message")')
         );
     }
 

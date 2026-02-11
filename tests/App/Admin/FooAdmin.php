@@ -19,7 +19,6 @@ use SensioLabs\AdminBundle\Admin\AdminInterface;
 use SensioLabs\AdminBundle\Datagrid\ListMapper;
 use SensioLabs\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use SensioLabs\AdminBundle\Form\FormMapper;
-use SensioLabs\AdminBundle\Form\Type\CollectionType;
 use SensioLabs\AdminBundle\Form\Type\ModelAutocompleteType;
 use SensioLabs\AdminBundle\Form\Type\TemplateType;
 use SensioLabs\AdminBundle\Show\ShowMapper;
@@ -27,6 +26,7 @@ use SensioLabs\AdminBundle\Tests\App\Model\Bar;
 use SensioLabs\AdminBundle\Tests\App\Model\Foo;
 use SensioLabs\AdminBundle\Tests\Fixtures\Controller\BatchOtherController;
 use SensioLabs\AdminBundle\Form\Type\ImmutableArrayType;
+use SensioLabs\AdminBundle\Form\Type\NativeCollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Count;
@@ -99,13 +99,14 @@ class FooAdmin extends AbstractAdmin
             )
             ->add(
                 'collection',
-                CollectionType::class,
+                NativeCollectionType::class,
                 [
                     'error_bubbling' => false,
                     'constraints' => [
                         new Count(min: 2),
                     ],
                     'entry_type' => TextType::class,
+                    'allow_add' => true,
                 ],
             );
     }

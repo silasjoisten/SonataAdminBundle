@@ -18,7 +18,10 @@ use SensioLabs\AdminBundle\Admin\AdminInterface;
 use SensioLabs\AdminBundle\Admin\Pool;
 use SensioLabs\AdminBundle\Route\AdminPoolLoader;
 use SensioLabs\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Routing\Loader\PhpFileLoader;
 use Symfony\Component\Routing\Route as SymfonyRoute;
 use Symfony\Component\Routing\RouteCollection as SymfonyRouteCollection;
 
@@ -44,6 +47,7 @@ final class AdminPoolLoaderTest extends TestCase
         $pool = new Pool($container, ['foo_admin', 'bar_admin']);
 
         $adminPoolLoader = new AdminPoolLoader($pool);
+        $adminPoolLoader->setResolver(new LoaderResolver([new PhpFileLoader(new FileLocator())]));
 
         $routeCollection1 = new RouteCollection('base.Code.Route.foo', 'baseRouteNameFoo', 'baseRoutePatternFoo', 'baseControllerNameFoo');
         $routeCollection2 = new RouteCollection('base.Code.Route.bar', 'baseRouteNameBar', 'baseRoutePatternBar', 'baseControllerNameBar');
@@ -71,6 +75,28 @@ final class AdminPoolLoaderTest extends TestCase
         static::assertInstanceOf(SymfonyRouteCollection::class, $collection);
         static::assertInstanceOf(SymfonyRoute::class, $collection->get('baseRouteNameFoo_foo'));
         static::assertInstanceOf(SymfonyRoute::class, $collection->get('baseRouteNameBar_bar'));
-        static::assertInstanceOf(SymfonyRoute::class, $collection->get('baseRouteNameBar_bar'));
+        static::assertInstanceOf(SymfonyRoute::class, $collection->get('baseRouteNameBar_baz'));
+    }
+
+    public function testLoadIncludesUserRoutes(): void
+    {
+        $container = new Container();
+        $pool = new Pool($container, []);
+
+        $adminPoolLoader = new AdminPoolLoader($pool);
+        $adminPoolLoader->setResolver(new LoaderResolver([new PhpFileLoader(new FileLocator())]));
+
+        $collection = $adminPoolLoader->load('foo', 'sensiolabs_admin');
+
+        // Security routes
+        static::assertInstanceOf(SymfonyRoute::class, $collection->get('sensiolabs_admin_user_security_login'));
+        static::assertInstanceOf(SymfonyRoute::class, $collection->get('sensiolabs_admin_user_security_check'));
+        static::assertInstanceOf(SymfonyRoute::class, $collection->get('sensiolabs_admin_user_security_logout'));
+
+        // Resetting routes
+        static::assertInstanceOf(SymfonyRoute::class, $collection->get('sensiolabs_admin_user_resetting_request'));
+        static::assertInstanceOf(SymfonyRoute::class, $collection->get('sensiolabs_admin_user_resetting_send_email'));
+        static::assertInstanceOf(SymfonyRoute::class, $collection->get('sensiolabs_admin_user_resetting_check_email'));
+        static::assertInstanceOf(SymfonyRoute::class, $collection->get('sensiolabs_admin_user_resetting_reset'));
     }
 }

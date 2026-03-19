@@ -49,10 +49,15 @@ final class AdminPoolLoader extends Loader
             }
 
             $reflection = new \ReflectionObject($admin);
-            if (false !== $reflection->getFileName() && file_exists($reflection->getFileName())) {
+            if (false !== $reflection->getFileName() && \file_exists($reflection->getFileName())) {
                 $collection->addResource(new FileResource($reflection->getFileName()));
             }
         }
+
+        $routingDir = \dirname(__DIR__).'/Resources/config/routing';
+
+        $collection->addCollection($this->import($routingDir.'/sensiolabs_admin_user_security.php'));
+        $collection->addCollection($this->import($routingDir.'/sensiolabs_admin_user_resetting.php'));
 
         return $collection;
     }

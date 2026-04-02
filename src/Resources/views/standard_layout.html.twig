@@ -252,7 +252,7 @@ file that was distributed with this source code.
         </aside>
     {% endblock sensiolabs_left_side %}
 
-    <div class="admin-main">
+    {% block sensiolabs_main_wrapper_start %}<div class="admin-main">{% endblock %}
         {% block sensiolabs_header %}
             {# No global header - actions are in content area #}
             <noscript>
@@ -433,7 +433,7 @@ file that was distributed with this source code.
                 {% endblock sensiolabs_page_content %}
             </main>
         {% endblock sensiolabs_wrapper %}
-    </div>
+    {% block sensiolabs_main_wrapper_end %}</div>{% endblock %}
 
     </body>
 </html>

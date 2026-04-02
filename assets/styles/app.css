@@ -23,7 +23,7 @@
    THEME CONFIGURATION
    Override these variables to customize the theme
    ============================================ */
-@theme {
+@theme inline {
     /* Primary Brand Color - Refined Blue */
     --color-primary-50: oklch(0.97 0.015 250);
     --color-primary-100: oklch(0.94 0.035 250);

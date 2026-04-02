@@ -17,24 +17,26 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
         ->set('sensiolabs.admin.user.admin.user')
-            ->class(param('sensiolabs.admin.user.admin.user.class'))
+            ->class('%sensiolabs.admin.user.admin.user.class%')
             ->tag('sensiolabs.admin', [
-                'model_class' => param('sensiolabs.admin.user.class.user'),
-                'controller' => param('sensiolabs.admin.user.admin.user.controller'),
+                'model_class' => '%sensiolabs.admin.user.class.user%',
+                'manager_type' => 'orm',
+                'controller' => '%sensiolabs.admin.user.admin.user.controller%',
                 'label' => 'users',
-                'translation_domain' => param('sensiolabs.admin.user.admin.user.translation_domain'),
+                'translation_domain' => '%sensiolabs.admin.user.admin.user.translation_domain%',
                 'group' => 'sensiolabs_user',
                 'icon' => 'lucide:users',
             ])
             ->call('setUserManager', [service('sensiolabs.admin.user.manager')])
 
         ->set('sensiolabs.admin.user.admin.group')
-            ->class(param('sensiolabs.admin.user.admin.group.class'))
+            ->class('%sensiolabs.admin.user.admin.group.class%')
             ->tag('sensiolabs.admin', [
-                'model_class' => param('sensiolabs.admin.user.class.group'),
-                'controller' => param('sensiolabs.admin.user.admin.group.controller'),
+                'model_class' => '%sensiolabs.admin.user.class.group%',
+                'manager_type' => 'orm',
+                'controller' => '%sensiolabs.admin.user.admin.group.controller%',
                 'label' => 'groups',
-                'translation_domain' => param('sensiolabs.admin.user.admin.group.translation_domain'),
+                'translation_domain' => '%sensiolabs.admin.user.admin.group.translation_domain%',
                 'group' => 'sensiolabs_user',
                 'icon' => 'lucide:shield',
             ]);

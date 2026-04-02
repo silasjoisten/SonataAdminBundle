@@ -20,7 +20,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->set('sensiolabs.admin.admin_exporter', AdminExporter::class)
             ->args([
-                service('sensiolabs.exporter.exporter'),
+                service('sonata.exporter.exporter'),
             ])
 
         ->alias(AdminExporter::class, 'sensiolabs.admin.admin_exporter');

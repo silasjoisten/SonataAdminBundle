@@ -9,10 +9,16 @@ file that was distributed with this source code.
 
 #}
 
-{% if object is defined and object.email is defined %}
-    <a href="{{ path(app.request.pathinfo, {'_switch_user': object.email}) }}"
-       class="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400">
-        {{ ux_icon('lucide:user-round-cog', {class: 'w-4 h-4'}) }}
-        <span>{{ 'switch_user'|trans({}, 'SensioLabsAdminBundle') }}</span>
-    </a>
-{% endif %}
+{% extends get_admin_template('base_list_field', admin.code) %}
+
+{% block field %}
+    {% if object is defined and object.email is defined %}
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params', {})|merge({'_switch_user': object.email})) }}"
+           class="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+            <span>{{ 'switch_user'|trans({}, 'SensioLabsAdminBundle') }}</span>
+        </a>
+    {% endif %}
+{% endblock %}

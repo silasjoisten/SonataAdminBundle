@@ -18,6 +18,7 @@ use SensioLabs\AdminBundle\DependencyInjection\Compiler\AddAuditReadersCompilerP
 use SensioLabs\AdminBundle\DependencyInjection\Compiler\ModelManagerCompilerPass;
 use SensioLabs\AdminBundle\Model\AuditReaderInterface;
 use SensioLabs\AdminBundle\Model\ModelManagerInterface;
+use SensioLabs\AdminBundle\Templating\TemplateRegistryInterface;
 use SensioLabs\AdminBundle\Util\AdminAclUserManagerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -321,17 +322,16 @@ final class SensioLabsAdminExtension extends Extension implements PrependExtensi
         $container->setParameter('sensiolabs_doctrine_orm_admin.entity_manager', null);
         $container->setParameter('sensiolabs_doctrine_orm_admin.templates', [
             'types' => [
-                'list' => [],
-                'show' => [],
+                'list' => TemplateRegistryInterface::LIST_TEMPLATES,
+                'show' => TemplateRegistryInterface::SHOW_TEMPLATES,
             ],
         ]);
 
-        // Define the templates (empty by default, can be overridden)
         $container->getDefinition('sensiolabs.admin.builder.orm_list')
-            ->replaceArgument(1, []);
+            ->replaceArgument(1, TemplateRegistryInterface::LIST_TEMPLATES);
 
         $container->getDefinition('sensiolabs.admin.builder.orm_show')
-            ->replaceArgument(1, []);
+            ->replaceArgument(1, TemplateRegistryInterface::SHOW_TEMPLATES);
     }
 
     public function getNamespace(): string

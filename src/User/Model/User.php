@@ -281,6 +281,10 @@ abstract class User implements UserInterface
 
     public function getGroups(): Collection
     {
+        if (!isset($this->groups)) {
+            $this->groups = new ArrayCollection();
+        }
+
         return $this->groups;
     }
 

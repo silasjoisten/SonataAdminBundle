@@ -212,7 +212,7 @@ final class Configuration implements ConfigurationInterface
                 ->end()
 
                 ->scalarNode('title')->defaultValue('SensioLabs Admin')->cannotBeEmpty()->end()
-                ->scalarNode('title_logo')->defaultValue('bundles/sonataadmin/images/logo_title.png')->cannotBeEmpty()->end()
+                ->scalarNode('title_logo')->defaultValue('bundles/sensiolabsadmin/images/logo_title.png')->cannotBeEmpty()->end()
 
                 ->scalarNode('default_controller')
                     ->defaultValue('sensiolabs.admin.controller.crud')
@@ -269,7 +269,7 @@ final class Configuration implements ConfigurationInterface
                             ->info('Enable locking when editing an object, if the corresponding object manager supports it.')
                         ->end()
                         ->scalarNode('mosaic_background')
-                            ->defaultValue('bundles/sonataadmin/images/default_mosaic_image.png')
+                            ->defaultValue('bundles/sensiolabsadmin/images/default_mosaic_image.png')
                             ->info('Background used in mosaic view')
                         ->end()
                     ->end()

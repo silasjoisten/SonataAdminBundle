@@ -52,6 +52,7 @@ class UserAdmin extends AbstractAdmin
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
             $list->add('impersonating', 'string', [
                 'template' => '@SensioLabsAdmin/User/Field/impersonating.html.twig',
+                'virtual_field' => true,
             ]);
         }
     }
